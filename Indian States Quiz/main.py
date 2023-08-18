@@ -17,7 +17,7 @@ while len(guessed_states) < 50:
 
     if answer_state == "Exit":
         missing_states = [state for state in all_states if state not in guessed_states]
-        #Used list comprehension here.
+        #Used list comprehension here to reduce the loc.
         new_data = pandas.DataFrame(missing_states)
         new_data.to_csv("states_to_learn.csv")
         print(missing_states)
