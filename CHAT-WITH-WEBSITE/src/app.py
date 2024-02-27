@@ -10,9 +10,10 @@ st.set_page_config(page_title = "Chat with Website", page_icon = "🤖")
 st.title("Chat with Website")
 
 #schemas - building bots of langchain models.
-chat_history = [
-    AIMessage(content="Hello! I am a chatbot. How can I help you?"),
-]
+if "chat_history" not in st.session_state:
+    st.session_state.chat_history = [
+        AIMessage(content="Hello! I am a bot. How can I help you?")
+    ]
 
 #sidebar
 with st.sidebar:
@@ -23,10 +24,10 @@ with st.sidebar:
 user_query = st.chat_input("Type your message here...")
 if user_query is not None and user_query != "":
     response = get_response(user_query)
-    chat_history.append(HumanMessage(content=user_query))
-    chat_history.append(AIMessage(content=response))
+    st.session_state.chat_history.append(HumanMessage(content=user_query))
+    st.session_state.chat_history.append(AIMessage(content=response))
 
 #chat history
 
 with st.sidebar:
-    st.write(chat_history)
+    st.write(st.session_state.chat_history)
