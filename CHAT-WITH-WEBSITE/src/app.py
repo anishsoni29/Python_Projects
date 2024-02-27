@@ -4,10 +4,16 @@ from langchain_core.messages import AIMessage, HumanMessage
 from langchain_community.document_loaders import WebBaseLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import Chroma
-from langchain_openai import OpenAIEmbeddings
+from langchain_openai import OpenAIEmbeddings, ChatOpenAI
 from dotenv import load_dotenv
+from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
+from langchain.chains import create_history_aware_retriever
 
 load_dotenv()
+
+
+def get_response(user_query):
+    return "I don't know!"
 
 def get_vectorstore_from_url(user_input):
     #get the text in document form
@@ -22,13 +28,16 @@ def get_vectorstore_from_url(user_input):
     vector_store = Chroma.from_documents(documents_chunks, OpenAIEmbeddings())
     return vector_store
 
-    return documents_chunks
-
-
-    
-
-def get_response(user_query):
-    return "I don't know!"
+def get_context_retreiver_chain(vector_store):
+    llm = ChatOpenAI()
+    retriever = vector_store.as_retriever()
+    prompt = ChatPromptTemplate.from_messages([
+        MessagesPlaceholder(variable_name="chat_history"),
+        ("user", "{input}"),
+        ("user", "Given the context above, what is the answer?")
+    ])
+    retriever_chain = create_history_aware_retriever(llm, retriever, prompt)
+    return retriever_chain
 
 #app config
 st.set_page_config(page_title = "Chat with Website", page_icon = "🤖")
