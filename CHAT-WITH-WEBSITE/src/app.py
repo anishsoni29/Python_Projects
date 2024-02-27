@@ -3,8 +3,14 @@ import streamlit as st
 from langchain_core.messages import AIMessage, HumanMessage
 from langchain_community.document_loaders import WebBaseLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_community.vectorstores import Chroma
+from langchain_openai import OpenAIEmbeddings
+from dotenv import load_dotenv
+
+load_dotenv()
 
 def get_vectorstore_from_url(user_input):
+    #get the text in document form
     loader = WebBaseLoader(user_input)
     documents = loader.load()
     
@@ -12,8 +18,14 @@ def get_vectorstore_from_url(user_input):
     text_splitter = RecursiveCharacterTextSplitter()
     documents = text_splitter.split_documents(documents)
 
+    #create a vectorstore from the chunks
+    vector_store = Chroma.from_documents(documents_chunks, OpenAIEmbeddings())
+    return vector_store
 
-    return documents
+    return documents_chunks
+
+
+    
 
 def get_response(user_query):
     return "I don't know!"
@@ -37,8 +49,6 @@ if website_url is None or website_url == "":
     st.warning("Please enter a website URL")
 else:
     documents_chunks = get_vectorstore_from_url(website_url)
-    with st.sidebar: 
-        st.write(documents_chunks)
 
     #user input
     user_query = st.chat_input("Type your message here...")
@@ -55,3 +65,14 @@ else:
         elif isinstance(message, HumanMessage):
             with st.chat_message("Human"):
                 st.write(message.content)
+
+
+# 1. chunk of text(document)
+# 2. embeddings --> 010101
+# 3. Vector store --> database
+# 4. ranked results
+# 5. LLM
+# 6. Answer
+# 7. Human 
+# 8. question embedding
+# 9. semantic search
