@@ -46,7 +46,7 @@ streamlit run app.py
 
 ## Contributing
 
-This repository is meant as supporting material for the [Youtube video tutorial](https://youtu.be/bupx08ZgSFg). Therefore, I am not accepting any pull requests unless they are for fixing bugs or typos.
+I am not accepting any pull requests unless they are for fixing bugs or typos.
 
 ## License
 
