@@ -1,5 +1,4 @@
-
-#pre-commands: pip install streamlit langchain lanchain-openai beautifulsoup4 python-dotenv chromadb
+# pip install streamlit langchain lanchain-openai beautifulsoup4 python-dotenv chromadb
 
 import streamlit as st
 from langchain_core.messages import AIMessage, HumanMessage
@@ -64,7 +63,7 @@ def get_response(user_input):
     
     response = conversation_rag_chain.invoke({
         "chat_history": st.session_state.chat_history,
-        "input": user_query
+        "input": user_input
     })
     
     return response['answer']
