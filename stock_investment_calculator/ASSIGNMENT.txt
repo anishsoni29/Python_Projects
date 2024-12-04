@@ -1,0 +1,42 @@
+ASSIGNMENT
+
+To take the test, please follow these instructions:
+1.	Set aside a quiet and distraction-free environment where you can focus on the test.
+2.	Make sure you have a stable internet connection.
+3.	Use your preferred Python IDE or text editor to write your code.
+4.	Include comments to explain your thought process and approach to solving the problem.
+5.	Once you have completed the test, please send the document back to us within 48 hours.
+
+We will evaluate your test based on correctness, efficiency, clarity and readability of the code, proper use of comments, and proper error handling. If your test is successful, we will contact you for the next step in the hiring process.
+
+Input : Enclosed stocks.csv has two columns namely stock and it's weightage
+Sample Output: Image enclosed
+
+Accept Input from User for Data Period and Investment Amount
+
+The user inputs the total investment amount and the investment period (e.g., start date and end date). This will define the time window for fetching the stock data. The user also provides the stocks to be considered for investment along with their weightage (i.e., the percentage of total investment allocated to each stock). Use TradingView/Yahoo Finance API to 
+
+Fetch Required Daily Candle Data
+
+Using APIs like Yahoo Finance API or TradingView API, fetch the required daily candle data (which includes Open, High, Low, Close, and Volume) for each stock ov the user-defined period.
+
+This data will be used for calculating the number of shares that can be bought for each stock on each day. Workout Amount to be Invested in Each Stock by Multiplying Stock Weightage with Investment Amount
+
+The total investment amount provided by the user is divided among the selected stocks based on their weightage.
+
+For each stock, the investment amount will be calculated by multiplying the weightage by the total investment amount. For example, if Stock A has a weightage of 50% and the total investment amount is $10,000, the investment in Stock A will be $5,000.
+
+Calculate the Number of Shares that Can Be Bought with This Amount by Dividing it with Daily Closing Price
+
+For each stock, and for each day in the selected period, the number of shares that can be bought is calculated by dividing the investment amount for the stock b the daily closing price of that stock.
+
+For instance, if $5,000 is invested in Stock A, and the closing price for a particular day is $100, then the number of shares that can be bought on that day wil be 50 shares ($5,000 $100).
+
+Technical Analysis (Referance Pandas Ta tecnical indicator):
+Use technical indicators like RSI (Relative Strength Index) to assess whether a stock is overbought (RSI > 70) or oversold (RSI < 30). Adjust the investment in each stock dynamically. If a stock is overbought, it may be wise to reduce the weightage or avoid buying more shares. Similarly, if a stock is oversold, it could be a good time to increase the weightage and buy more shares.
+If Stock A's RSI is above 70, reduce its weightage by 10%; if RSI is above 80, reduce by 20%; and if RSI is above 90, reduce by 30%; conversely, for oversold stocks (RSI < 30), increase weightage by 10%, 20%, or 30% depending on the level.
+
+Repeat the Process for All Stocks in the Input List for All Dates of User Input
+For every stock in the list, and for each day in the specified period, the investment allocation is recalculated.
+The number of shares is computed for each stock using the adjusted closing price for each date.
+The process is repeated for all the stocks over the entire date range specified by the user, ensuring that the user gets an accurate calculation of how many shares could be bought for each stock on each day.
